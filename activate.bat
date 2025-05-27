@@ -1,0 +1,1 @@
+django\Scripts\activate

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des villes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-tr from-blue-100 via-green-100 to-teal-100 min-h-screen flex flex-col items-center p-10 font-sans">
+
+    <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-green-500 to-teal-400 mb-10 animate-fade-in">
+        🏙️ Liste des villes
+    </h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl animate-fade-in-slow">
+        {% for city in cities %}
+        <div class="bg-white bg-opacity-90 shadow-xl rounded-2xl p-6 transform transition duration-300 hover:scale-105 hover:shadow-2xl flex items-center justify-between space-x-4">
+            <span class="inline-block px-3 py-1 rounded-full bg-blue-500 text-white font-bold text-lg select-none">
+                {{ city.city_id }}
+            </span>
+            <div class="text-left">
+                <p class="text-xl font-semibold text-blue-800">
+                    {{ city.city }}
+                </p>
+                <p class="text-sm text-gray-600">
+                    ({{ city.country.country }})
+                </p>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center text-gray-600 text-lg">Aucune ville trouvée.</div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'banniere' %}" class="mt-10 inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-full shadow-md transition duration-300">
+        ⬅ Retour à la bannière
+    </a>
+
+    <style>
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-slow {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-slow {
+            animation: fade-in-slow 1.2s ease-out forwards;
+        }
+    </style>
+</body>
+</html>
