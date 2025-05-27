@@ -11,10 +11,22 @@
         🎬 Liste des films
     </h1>
 
-    <form method="get" action="{% url 'search' %}" class="mb-10 w-full max-w-xl">
+    <form method="get" action="{% url 'search' %}" class="mb-4 w-full max-w-xl flex space-x-2">
         <input type="text" name="q" value="{{ query }}" placeholder="Rechercher un film ou un acteur..."
-               class="w-full p-4 rounded-full border-2 border-indigo-300 focus:ring-2 focus:ring-indigo-400 shadow-md focus:outline-none" />
+               class="flex-grow p-4 rounded-full border-2 border-indigo-300 focus:ring-2 focus:ring-indigo-400 shadow-md focus:outline-none" />
+        <button type="submit" 
+                class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 rounded-full shadow-md transition duration-300">
+            🔍
+        </button>
     </form>
+    
+    {% if query %}
+        <a href="{% url 'film_list' %}" 
+           class="inline-block mb-10 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-6 rounded-full shadow-md transition duration-300">
+            ✖ Annuler la recherche
+        </a>
+    {% endif %}
+    
     
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl animate-fade-in-slow">
         {% for film in films %}

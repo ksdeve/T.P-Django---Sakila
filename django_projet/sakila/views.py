@@ -36,20 +36,14 @@ def film_list(request):
     return render(request, 'film_list.html', {'films': films})
 
 
+def search(request):
+    query = request.GET.get('q', '')
+    films = Film.objects.filter(title__icontains=query)
+    actors = Actor.objects.filter(
+        Q(first_name__icontains=query) | Q(last_name__icontains=query)
+    )
+    return render(request, 'search.html', {'films': films, 'actors': actors, 'query': query})
 
 def film_detail(request, pk):
     film = get_object_or_404(Film, pk=pk)
     return render(request, 'film_detail.html', {'film': film})
-
-
-def search(request):
-    query = request.GET.get('q', '').strip()
-    films = Film.objects.filter(title__icontains=query) if query else Film.objects.none()
-    actors = Actor.objects.filter(
-        Q(first_name__icontains=query) | Q(last_name__icontains=query)
-    ) if query else Actor.objects.none()
-    return render(request, 'search.html', {
-        'query': query,
-        'films': films,
-        'actors': actors,
-    })
