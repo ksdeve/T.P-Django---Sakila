@@ -7,6 +7,12 @@ from sakila.models import Actor
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
+from sakila.forms import LoginForm
+from sakila.models import User
+import bcrypt
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
 # Create your views here.
 def status(request):
     h = datetime.now().strftime("%Y-%m- %d - %H:%M:%S")
@@ -47,3 +53,23 @@ def search(request):
 def film_detail(request, pk):
     film = get_object_or_404(Film, pk=pk)
     return render(request, 'film_detail.html', {'film': film})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data['username']
+            pwd = form.cleaned_data['password']
+            try:
+                user = User.objects.get(username=uname)
+                if bcrypt.checkpw(pwd.encode(), user.password.encode()):
+                    request.session['user_id'] = user.id
+                    return redirect('banniere')  # ou une autre page
+                else:
+                    messages.error(request, "Mot de passe incorrect.")
+            except User.DoesNotExist:
+                messages.error(request, "Utilisateur non trouvé.")
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})

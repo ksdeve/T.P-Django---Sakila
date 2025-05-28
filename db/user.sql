@@ -1,0 +1,1 @@
+INSERT INTO users (username, password, type) VALUES ('hitema', '$2b$12$NqR29YjT0Vt3xtq5CAWK5u63WTwnAjvUpyyHEofdnhr2f5awP8LuK', "S");

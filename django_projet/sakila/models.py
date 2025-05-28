@@ -8,6 +8,8 @@ class Country(models.Model):
     class Meta:
         db_table = 'country'
         ordering = ['country']
+        managed = False
+
 
     def __str__(self):
         return self.country
@@ -21,6 +23,8 @@ class City(models.Model):
     class Meta:
         db_table = 'city'
         ordering = ['city']
+        managed = False
+
 
     def __str__(self):
         return self.city
@@ -64,3 +68,16 @@ class FilmActor(models.Model):
         db_table = 'film_actor'
         managed = False
         unique_together = (('actor', 'film'),)
+
+
+class User(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=150, unique=True)
+    password = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'users'
+        managed = False
+
+    def __str__(self):
+        return self.username

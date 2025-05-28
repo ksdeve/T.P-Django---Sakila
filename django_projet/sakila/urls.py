@@ -1,5 +1,5 @@
 from django.urls import path
-from sakila.views import status, country_list, city_list, cities_by_country, search, film_detail, film_list
+from sakila.views import status, country_list, city_list, cities_by_country, search, film_detail, film_list, login_view
 
 urlpatterns = [
     path('hello/', status, name='banniere'),
@@ -10,6 +10,7 @@ urlpatterns = [
     path('countries/<int:country_id>/cities/', cities_by_country, name='cities_by_country'),
 
     path('films/<int:pk>/', film_detail, name='film_detail'),
+    path('', login_view, name='login'),
 
 
     path('search/', search, name='search')
